@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include <cstdio>
+#include "player.cpp"
 
 int main() {
     int screenOrigin_x = 0;
@@ -10,29 +11,27 @@ int main() {
 
     InitWindow(screenWidth, screenHeight, windowName);
 
-    int circle_x = screenWidth/2;
-    int circle_y = screenHeight/2;
-    int circle_r = 25;
+    Player player(screenWidth/2, screenHeight/2, 25, BLUE);
 
     SetTargetFPS(60);
     while(!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(WHITE);
 
-        if(IsKeyDown(KEY_A) && circle_x - circle_r > screenOrigin_x) {
-            circle_x -= 10;
+        if(IsKeyDown(KEY_A) && player.x - player.r > screenOrigin_x) {
+            player.x -= 10;
         }
-        if(IsKeyDown(KEY_D) && circle_x + circle_r < screenOrigin_x + screenWidth) {
-            circle_x += 10;
+        if(IsKeyDown(KEY_D) && player.x + player.r < screenOrigin_x + screenWidth) {
+            player.x += 10;
         }
-        if(IsKeyDown(KEY_S) && circle_y + circle_r < screenOrigin_y + screenHeight) {
-            circle_y += 10;
+        if(IsKeyDown(KEY_S) && player.y + player.r < screenOrigin_y + screenHeight) {
+            player.y += 10;
         }
-        if(IsKeyDown(KEY_W) && circle_y - circle_r > screenOrigin_y) {
-            circle_y -= 10;
+        if(IsKeyDown(KEY_W) && player.y - player.r > screenOrigin_y) {
+            player.y -= 10;
         }
 
-        DrawCircle(circle_x, circle_y, circle_r, BLUE);
+        player.render();
 
         EndDrawing();
     }
